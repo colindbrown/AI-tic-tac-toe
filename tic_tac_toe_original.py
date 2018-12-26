@@ -7,41 +7,41 @@ Created on Tue Jun 09 11:13:26 2015
 import time
 
 def Board(list):
-    print '   |   |   '
-    print ' %s | %s | %s ' % (list['A1'],list['A2'],list['A3'])
-    print '___|___|___'
-    print '   |   |   '
-    print ' %s | %s | %s ' % (list['B1'],list['B2'],list['B3'])
-    print '___|___|___'
-    print '   |   |   '
-    print ' %s | %s | %s ' % (list['C1'],list['C2'],list['C3'])
-    print '   |   |   '
+    print('   |   |   ')
+    print(' %s | %s | %s ' % (list['A1'],list['A2'],list['A3']))
+    print('___|___|___')
+    print('   |   |   ')
+    print(' %s | %s | %s ' % (list['B1'],list['B2'],list['B3']))
+    print('___|___|___')
+    print('   |   |   ')
+    print(' %s | %s | %s ' % (list['C1'],list['C2'],list['C3']))
+    print('   |   |   ')
 
 def Intro():
-    print 'Welcome to Tic Tac Toe!'
+    print('Welcome to Tic Tac Toe!')
     time.sleep(1)
-    print 'These are the positions. Remember them.'
-    print ''
+    print('These are the positions. Remember them.')
+    print('')
     time.sleep(1)
-    print '    |    |    '
-    print ' A1 | A2 | A3 ' 
-    print '____|____|____'
-    print '    |    |    '
-    print ' B1 | B2 | B3 ' 
-    print '____|____|____'
-    print '    |    |    '
-    print ' C1 | C2 | C3 '
-    print '    |    |    '
-    print ''
+    print('    |    |    ')
+    print(' A1 | A2 | A3 ') 
+    print('____|____|____')
+    print('    |    |    ')
+    print(' B1 | B2 | B3 ') 
+    print('____|____|____')
+    print('    |    |    ')
+    print(' C1 | C2 | C3 ')
+    print('    |    |    ')
+    print('')
     time.sleep(1)
-    print 'Are you ready? (Yes/No and then press Enter)'
-    print''    
-    if raw_input().lower() == 'yes':
+    print('Are you ready? (Yes/No and then press Enter)')
+    print('')
+    if input().lower() == 'yes':
         time.sleep(1)
-        print''        
+        print('')
         return 'Yes'
     else:
-        print ''         
+        print('')   
         return 'No'
     
 def CheckX(Positions):
@@ -195,25 +195,25 @@ def CheckO(Positions):
 def Play():  
     turns = 0    
     Positions = {'A1':' ','A2':' ','A3':'X','B1':' ','B2':' ','B3':' ','C1':' ','C2':' ','C3':' '}
-    print 'I\'ll go first.'
-    print ''    
+    print('I\'ll go first.')
+    print('')
     time.sleep(1)
     Board(Positions)
     time.sleep(1)
-    print ''    
+    print('')
     while turns < 1:
-        print 'Your turn'
-        print 'Enter a position.'
-        print ''
+        print('Your turn')
+        print('Enter a position.')
+        print('')
         time.sleep(1)
         check = 0
         while check == 0:
-            move = str(raw_input().upper())
-            print ''
+            move = str(input().upper())
+            print('')
             time.sleep(1)
             if move != 'A1' and move != 'A2' and move !='B1' and move !='B2' and move !='B3' and move !='C1' and move !='C2' and move !='C3':
-                print '%s is not a sane input.'% (move)
-                print ''
+                print('%s is not a sane input.'% (move))
+                print('')
                 time.sleep(1)
             if move == 'A1' or move == 'A2' or move =='B1' or move =='B2' or move =='B3' or move =='C1' or move =='C2' or move =='C3':
                 if Positions[move] == ' ':
@@ -221,42 +221,42 @@ def Play():
                     turns += 1      
                     Positions[move] = 'O'
                     Board(Positions)
-                    print ''
+                    print('')
                     time.sleep(1)
                 else:
-                    print move + ' is not a valid input.'
-                    print ''
+                    print(move + ' is not a valid input.')
+                    print('')
                     time.sleep(1)
     while turns == 1:
-        print 'My turn.'
-        print ''
+        print('My turn.')
+        print('')
         time.sleep(1)
         if Positions['B2'] == 'O':
             Positions['C1'] = 'X'
             Board(Positions)
-            print ''
+            print('')
             time.sleep(1)
         if Positions['A1'] == 'O' or Positions['A2'] == 'O' or Positions['C1'] == 'O' or Positions['C2'] == 'O':
             Positions['C3'] = 'X'
             Board(Positions)
-            print ''
+            print('')
             time.sleep(1)
         if Positions['B1'] == 'O' or Positions['B3'] == 'O' or Positions['C3'] == 'O':
             Positions['A1'] = 'X'
             Board(Positions)
-            print ''
+            print('')
             time.sleep(1)
-        print 'Your Turn'
-        print ''
+        print('Your Turn')
+        print('')
         time.sleep(1)
         check = 0
         while check == 0:
-            move = str(raw_input().upper())
-            print ''
+            move = str(input().upper())
+            print('')
             time.sleep(1)
             if move != 'A1' and move != 'A2' and move !='B1' and move !='B2' and move !='B3' and move !='C1' and move !='C2' and move !='C3':
-                print '%s is not a valid input.'% (move)
-                print ''
+                print('%s is not a valid input.'% (move))
+                print('')
                 time.sleep(1)
             if move == 'A1' or move == 'A2' or move =='B1' or move =='B2' or move =='B3' or move =='C1' or move =='C2' or move =='C3':
                 if Positions[move] == ' ':
@@ -264,51 +264,51 @@ def Play():
                     turns += 1
                     Positions[move] = 'O'
                     Board(Positions)
-                    print ''
+                    print('')
                     time.sleep(1)
                 else:
-                    print move + ' is not a valid input.'
-                    print ''
+                    print(move + ' is not a valid input.')
+                    print('')
                     time.sleep(1)
     while turns >1 and turns < 8:        
         check = 0
-        print'My turn.'
-        print ''
+        print('My turn.')
+        print('')
         time.sleep(1)
         if CheckX(Positions) != None:
             Positions[CheckX(Positions)] = 'X'
             Board(Positions)
-            print ''
+            print('')
             time.sleep(1)
             turns += 1
         elif CheckO(Positions) != None:
             Positions[CheckO(Positions)] = 'X'       
             Board(Positions)
-            print ''
+            print('')
             time.sleep(1)
             turns += 1
         elif Positions['C1'] == 'O' or Positions['C2'] == 'O':
             Positions['A1'] = 'X'
             Board(Positions)
-            print ''
+            print('')
             time.sleep(1)
             turns += 1
         elif Positions['B1'] == 'O':
             Positions['C3'] = 'X'
             Board(Positions)
-            print ''
+            print('')
             time.sleep(1)
             turns += 1
         else:
             Positions['C1'] = 'X'
             Board(Positions)
-            print ''
+            print('')
             time.sleep(1)
             turns += 1
         if CheckX(Positions) == 'X wins':
             check = 1
             turns = 12
-            print 'X wins!'
+            print('X wins!')
             time.sleep(1)
         tienumb = 0
         for value in Positions:
@@ -317,19 +317,19 @@ def Play():
         if tienumb == 9:
             check = 1
             turns = 12
-            print 'It\'s a tie!'
+            print('It\'s a tie!')
             time.sleep(1)
         if check == 0:
-            print 'Your Turn'
-            print ''
+            print('Your Turn')
+            print('')
             time.sleep(1)
         while check == 0:
-            move = str(raw_input().upper())
-            print ''
+            move = str(input().upper())
+            print('')
             time.sleep(1)
             if move != 'A1' and move != 'A2' and move !='B1' and move !='B2' and move !='B3' and move !='C1' and move !='C2' and move !='C3':
-                print '%s is not a valid input.'% (move)
-                print ''
+                print('%s is not a valid input.'% (move))
+                print('')
                 time.sleep(1)
             if move == 'A1' or move == 'A2' or move =='B1' or move =='B2' or move =='B3' or move =='C1' or move =='C2' or move =='C3':
                 if Positions[move] == ' ':
@@ -338,18 +338,18 @@ def Play():
                     time.sleep(1)        
                     Positions[move] = 'O'
                     Board(Positions)
-                    print ''
+                    print('')
                     time.sleep(1)
                 else:
-                    print move + ' is not a valid input.'
-                    print ''
+                    print(move + ' is not a valid input.')
+                    print('')
                     time.sleep(1)
         if turns == 12:
-            print 'Do you want to play again?'
-            print ''
+            print('Do you want to play again?')
+            print('')
             time.sleep(1)
-            if raw_input().lower() == 'yes':
-                print''
+            if input().lower() == 'yes':
+                print('')
                 time.sleep(1)
                 Play()
              
