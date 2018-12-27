@@ -45,6 +45,8 @@ class SmartBoard(Board):
                         opp += 1
                 if same == 3:
                     self.winner = value
+                elif value == "O" and same == 2 and opp == 0:
+                    self.possibleLosses.append(t)
                 elif opp == 0:
                     for i in t:
                         self.proximateCount[i][value] += 1
@@ -53,7 +55,6 @@ class SmartBoard(Board):
                         self.possibleWins.remove(t)
                     for i in t:
                         self.proximateCount[i][OPPOSITE[value]] -= 1
-        print(self.proximateCount)
 
     def bestMove(self):
         proximateScores = [0 for i in range(9)]
@@ -67,16 +68,20 @@ class SmartBoard(Board):
                         for i in t:
                             if i != pos and self.unused(i):
                                 proximateScores[pos] += self.proximateCount[i]["X"] - self.proximateCount[i]["O"]
-
-        print(proximateScores)
+        if self.possibleLosses:
+            for i in self.possibleLosses[0]:
+                if self.unused(i):
+                    self.possibleLosses.clear()
+                    return i
         return proximateScores.index(max(proximateScores))
-
 
     def reset(self):
         Board.reset(self)
         self.winner = ""
         self.proximateCount = [{"X": 0, "O": 0} for i in range(9)]
         self.possibleWins = TRIADS.copy()
+        self.possibleLosses = []
+        
 
 class Game:
     def __init__(self):
