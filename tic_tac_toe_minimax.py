@@ -1,6 +1,5 @@
 MOVELIST = {'a1': 0, 'a2': 1, 'a3': 2, 'b1': 3, 'b2': 4, 'b3': 5, 'c1': 6, 'c2': 7, 'c3': 8}
 TRIADS = [(0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6)]
-OPPOSITE = {"X": "O", "O": "X"}
 
 class Board:
     def __init__(self):
@@ -25,63 +24,48 @@ class Board:
     def reset(self):
         self.board = [" " for i in range(9)]
 
-class SmartBoard(Board):
+class MinimaxBoard(Board):
+    def detectWinner(self, board):
+        for t in TRIADS:
+            if board[t[0]] != " " and board[t[0]] == board[t[1]] and board[t[1]] == board[t[2]]:
+                return board[t[0]]
+        if " " not in board:
+            return "Tie"
+        return ""
+
     def playMove(self, pos, value):
         Board.playMove(self, pos, value)
-        if " " not in self.board:
-            self.winner = "Tie"
-        self.proximateCount[pos]["X"] -= 10 # discount squares which have already been used
+        self.winner = self.detectWinner(self.board)
 
-        for t in TRIADS:
-            if pos in t:
-                same, opp = (0,0)
-                for i in t:
-                    if self.board[i] == value:
-                        same += 1
-                    elif self.board[i] == OPPOSITE[value]:
-                        opp += 1
-                if same == 3:
-                    self.winner = value
-                elif value == "O" and same == 2 and opp == 0:
-                    self.possibleLosses.append(t)
-                elif opp == 0:
-                    for i in t:
-                        self.proximateCount[i][value] += 1
-                else:
-                    if t in self.possibleWins:
-                        self.possibleWins.remove(t)
-                    for i in t:
-                        self.proximateCount[i][OPPOSITE[value]] -= 1
+    def minimax(self, board, Xturn):
+        positionScores = [-20 if Xturn else 20 for i in range(9)]
+        for i in range(9):
+            if board[i] == " ":
+                newBoard = board.copy()
+                newBoard[i] = "X" if Xturn else "O"
+                winner = self.detectWinner(newBoard)
+                if winner == "Tie":
+                    return (0,i)
+                elif winner:
+                    return (10, i) if winner == "X" else (-10,i)
+                positionScores[i] = self.minimax(newBoard, not Xturn)[0]
+        if Xturn:
+            return (max(positionScores), positionScores.index(max(positionScores)))
+        else:
+            return (min(positionScores), positionScores.index(min(positionScores)))
 
     def bestMove(self):
-        proximateScores = [0 for i in range(9)]
-        for pos in range(9):
-            proximateScores[pos] += self.proximateCount[pos]["X"]
-            if self.unused(pos):
-                if self.proximateCount[pos]["X"] >= 2:
-                    return pos
-                for t in self.possibleWins:
-                    if pos in t:
-                        for i in t:
-                            if i != pos and self.unused(i):
-                                proximateScores[pos] += self.proximateCount[i]["X"] - self.proximateCount[i]["O"]
-        if self.possibleLosses:
-            for i in self.possibleLosses[0]:
-                if self.unused(i):
-                    self.possibleLosses.clear()
-                    return i
-        return proximateScores.index(max(proximateScores))
+        val = self.minimax(self.board, True)
+        return val[1]
 
     def reset(self):
         Board.reset(self)
         self.winner = ""
-        self.proximateCount = [{"X": 0, "O": 0} for i in range(9)]
-        self.possibleWins = TRIADS.copy()
-        self.possibleLosses = []
+        
 
 class Game:
     def __init__(self):
-        self.board = SmartBoard()
+        self.board = MinimaxBoard()
         self.Xturn = True
 
     def playerTurn(self):
